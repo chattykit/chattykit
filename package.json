@@ -1,0 +1,10 @@
+{
+  "name": "twitch",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Bin Ury",
+  "license": "MIT",
+  "dependencies": {
+    "tmi.js": "^1.2.1"
+  }
+}
