@@ -36,8 +36,6 @@ function app(config) {
   });
 
   this.client.connect();
-  return this.client;
-
 }
 // TODO: Import and register event configurations
 
