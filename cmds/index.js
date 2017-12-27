@@ -1,2 +1,5 @@
-// TODO
-module.exports = {};
+const SampleCommand = require('./sample.command');
+
+module.exports = [
+  SampleCommand,
+];
