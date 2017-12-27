@@ -1,6 +1,6 @@
 {
-  "name": "twitch",
-  "version": "1.0.0",
+  "name": "chattykit",
+  "version": "0.0.1",
   "main": "index.js",
   "author": "Bin Ury",
   "license": "MIT",
