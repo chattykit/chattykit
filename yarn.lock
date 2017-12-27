@@ -77,6 +77,10 @@ array-unique@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/array-unique/-/array-unique-0.2.1.tgz#a1d97ccafcbc2625cc70fadceb36a50c58b01a53"
 
+asap@~2.0.3:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
+
 asn1@~0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/asn1/-/asn1-0.2.3.tgz#dac8787713c9966849fc8180777ebe9c1ddf3b86"
@@ -1016,6 +1020,13 @@ nan@^2.3.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.8.0.tgz#ed715f3fe9de02b57a5e6252d90a96675e1f085a"
 
+nedb-promises@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/nedb-promises/-/nedb-promises-1.1.2.tgz#82785177aaacc5a999310a579f833e67a7392ed2"
+  dependencies:
+    nedb "^1.8.0"
+    promise "^8.0.1"
+
 nedb@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/nedb/-/nedb-1.8.0.tgz#0e3502cd82c004d5355a43c9e55577bd7bd91d88"
@@ -1214,6 +1225,12 @@ private@~0.1.5:
 process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
+
+promise@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/promise/-/promise-8.0.1.tgz#e45d68b00a17647b6da711bf85ed6ed47208f450"
+  dependencies:
+    asap "~2.0.3"
 
 ps-tree@^1.1.0:
   version "1.1.0"

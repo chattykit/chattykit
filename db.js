@@ -1,4 +1,4 @@
-const nedb = require('nedb');
+const nedb = require('nedb-promises');
 const winston = require('./logger');
 
 const databases = [

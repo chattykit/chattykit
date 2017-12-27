@@ -17,18 +17,15 @@ function app(config) {
 
   this.client.on('join', (channel, username) => {
     winston.info(`${username} has joined ${channel}`);
-    db.users.find({ username }, (err, user) => {
-      if (err) winston.error(err);
-      else if (user.length === 0) {
-        db.users.insert({ username }, (err) => {
-          if (err) {
-            winston.error(err);
-          } else {
-            winston.debug(`Logged new user:${username}`);
-          }
-        });
-      }
-    });
+    db.users
+      .find({ username })
+      .then((user) => {
+        if (user.length === 0) {
+          db.users
+            .insert({ username })
+            .then(() => winston.debug(`Logged new user:${username}`));
+        }
+      }).catch((err) => winston.error(err));
   });
 
   this.client.on('message', (_, user, msg, self) => {
