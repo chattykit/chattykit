@@ -13,6 +13,7 @@ class Chattykit {
     this.users = new Users();
     [this.CHAN_NAME] = config.channels;
     this.client = new tmi.Client(config);
+    this.registerEvents();
   }
 
   connect() {
@@ -60,13 +61,14 @@ class Chattykit {
     });
 
     this.client.on('roomstate', (_, state) => {
-      db.state.find({ channel: `#${this.CHAN_NAME}` }).then((doc) => {
-        // TODO: Handle updates
-        if (!doc.length) {
-          db.state.insert(state);
+      winston.debug('Updating roomstate');
+      db.state.findOne({ name: 'channel' }).then((doc) => {
+        if (!doc) {
+          db.state.insert(Object.assign(state, { name: 'channel' }));
         }
       }).catch(err => winston.error(err));
     });
+
     this.client.on('chat', (_, user, msg, self) => {
       if (self) return;
       const { username } = user;
