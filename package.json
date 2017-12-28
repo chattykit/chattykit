@@ -1,8 +1,18 @@
 {
   "name": "chattykit",
+  "description": "An easily-extensible Twitch bot framework",
+  "homepage": "https://chattykit.github.io",
   "version": "0.0.1",
   "main": "index.js",
-  "author": "Bin Ury",
+  "author": {
+    "name": "Bin Ury",
+    "email": "1146921+teddy-error@users.noreply.github.com",
+    "url": "https://twitter.com/bin_ury"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chattykit/chattykit"
+  },
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
