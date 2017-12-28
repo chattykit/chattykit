@@ -25,7 +25,7 @@ class Chattykit {
     winston.silly(`Actions: ${cmd.actions}`);
 
     // Verify cmd
-    if (!cmd.hasOwnProperty('name') || !cmd.hasOwnProperty('name')) {
+    if (!cmd.hasOwnProperty('name') || !cmd.hasOwnProperty('keyword')) {
       winston.error(`Invalid command configuration: ${cmd.name}`);
       winston.error('If you\'ve added a new command recently, verify it is configured with all required properties.');
     }
@@ -63,7 +63,7 @@ class Chattykit {
         if (!doc.length) {
           db.state.insert(state);
         }
-      });
+      }).catch(err => winston.error(err));
     });
     this.client.on('message', (_, user, msg, self) => {
       if (self) return;
@@ -71,7 +71,9 @@ class Chattykit {
       // Ignore commands
       if (msg.match(/^!/) === null) {
         winston.info(`${username}: ${msg}`);
-        db.msgs.insert({ username, msg });
+        db.msgs
+          .insert({ username, msg })
+          .catch(err => winston.error(err));
       }
     });
   }
