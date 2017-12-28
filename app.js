@@ -2,12 +2,15 @@ const tmi = require('tmi.js');
 const winston = require('./logger');
 const db = require('./db');
 
+const Users = require('./users');
+
 class Chattykit {
   constructor(config) {
     if (!config) {
       winston.error('Config not supplied… quitting. Make sure app is called with valid config object arg in index.js');
       throw new Error();
     }
+    this.users = new Users();
     [this.CHAN_NAME] = config.channels;
     this.client = new tmi.Client(config);
   }
@@ -46,26 +49,25 @@ class Chattykit {
     this.client.on('connected', (address, port) => {
       winston.info(`Connected as ${this.client.username} at ${address} on ${port}`);
     });
+
     this.client.on('join', (channel, username) => {
       winston.info(`${username} has joined ${channel}`);
-      db.users
-        .find({ username })
-        .then((user) => {
-          if (user.length === 0) {
-            db.users
-              .insert({ username })
-              .then(() => winston.debug(`Logged new user:${username}`));
-          }
-        }).catch(err => winston.error(err));
+      this.users.register(username);
     });
+
+    this.client.on('part', (channel, username) => {
+      winston.info(`${username} has left ${channel}`);
+    });
+
     this.client.on('roomstate', (_, state) => {
       db.state.find({ channel: `#${this.CHAN_NAME}` }).then((doc) => {
+        // TODO: Handle updates
         if (!doc.length) {
           db.state.insert(state);
         }
       }).catch(err => winston.error(err));
     });
-    this.client.on('message', (_, user, msg, self) => {
+    this.client.on('chat', (_, user, msg, self) => {
       if (self) return;
       const { username } = user;
       // Ignore commands
@@ -79,7 +81,7 @@ class Chattykit {
   }
 
   broadcast(msg) {
-    winston.debug(`Broadcast: ${msg}`);
+    winston.info(`Broadcast: ${msg}`);
     this.client.say(this.CHAN_NAME, msg);
   }
 }
