@@ -2,7 +2,7 @@
   "name": "chattykit",
   "description": "An easily-extensible Twitch bot framework",
   "homepage": "https://chattykit.github.io",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "author": {
     "name": "Bin Ury",

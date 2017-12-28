@@ -1,4 +1,4 @@
-const nedb = require('nedb-promises');
+const Nedb = require('nedb-promises');
 const winston = require('./logger');
 
 const databases = [
@@ -7,7 +7,7 @@ const databases = [
   'events',
 ];
 
-let db = {};
+const db = {};
 
 function template(name) {
   return {
@@ -20,11 +20,23 @@ function template(name) {
       } else {
         winston.debug(`${name} database loaded`);
       }
-    }
+    },
   };
 }
 databases.forEach((name) => {
-  db[name] = new nedb(template(name));
+  db[name] = new Nedb(template(name));
+});
+db.state = new Nedb({
+  filename: 'db/state.db',
+  autoload: true,
+  timestampData: false,
+  onload(err) {
+    if (err) {
+      winston.error(err);
+    } else {
+      winston.debug('State loaded');
+    }
+  },
 });
 
 module.exports = db;

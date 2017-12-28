@@ -33,6 +33,7 @@ function app(config) {
       const keyword = new RegExp(`^${cmd.keyword}`, 'i');
       if (msg.match(keyword)) {
         cmd.actions.forEach(action => action.call(this, user));
+        // TODO: Call events
       }
     });
   };
@@ -59,6 +60,13 @@ function app(config) {
             .then(() => winston.debug(`Logged new user:${username}`));
         }
       }).catch(err => winston.error(err));
+  });
+  this.client.on('roomstate', (_, state) => {
+    db.state.find({ channel: `#${this.CHAN_NAME}` }).then((doc) => {
+      if (!doc.length) {
+        db.state.insert(state);
+      }
+    });
   });
   this.client.on('message', (_, user, msg, self) => {
     if (self) return;
