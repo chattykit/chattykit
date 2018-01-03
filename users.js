@@ -26,7 +26,7 @@ module.exports = function Users() {
     }
     if (!user) {
       try {
-        user = await this.register({ username });
+        user = await this.insert(username);
       } catch (error) {
         winston.error(error);
       }
